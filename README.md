@@ -1,77 +1,119 @@
-# EX 02- DIGITAL_IMAGE_PROCESSING_TECHNIQUES
-## Developed By
-
-- **Name:** NARENDRA KRISHNAN KS
-- **Register Number:** 212225S40096
 # Image Capture and Video Processing Using OpenCV
+
+---
 
 ## Aim
 
 To write a Python program using OpenCV to capture an image from the webcam and perform the following operations:
 
-1. Capture and save a frame as a JPG image.
-2. Display the live video stream.
-3. Display the video by resizing the window.
-4. Rotate and display the video by 90° clockwise.
+1. Write the frame as a JPG file  
+2. Display the video  
+3. Display the video by resizing the window  
+4. Rotate and display the video  
 
-## Software Requirements
+---
 
-- **Programming Language:** Python 3.7
-- **IDE:** Visual Studio Code (VS Code) / Jupyter Notebook
-- **Python Distribution:** Anaconda
-- **Library:** OpenCV (`cv2`)
+## 🛠️ Software Used
 
-## Algorithm
+- Anaconda – Python 3.7  
+- Jupyter Notebook / VS Code  
+- OpenCV (`cv2`)  
 
-**Step 1:** Import the required libraries and initialize the webcam using `cv2.VideoCapture()`.
+---
 
-**Step 2:** Capture frames continuously from the webcam.
+## ⚙️ Algorithm
 
-**Step 3:** Save a captured frame as a JPG image using `cv2.imwrite()`.
+### Step 1:
+Import the required libraries and initialize the webcam using `cv2.VideoCapture()`.
 
-**Step 4:** Display the live video stream using `cv2.imshow()`.
+### Step 2:
+Capture frames continuously from the webcam.
 
-**Step 5:** Resize the frame to 640 × 480 pixels and display the resized video.
+### Step 3:
+Save a frame as a JPG image using `cv2.imwrite()`.
 
-**Step 6:** Rotate the video frame by 90° clockwise using OpenCV functions and display the rotated video.
+### Step 4:
+Display the live video stream using `cv2.imshow()`.
 
-**Step 7:** Release the webcam and close all OpenCV windows after processing.
+### Step 5:
+Resize the frame and rotate it using OpenCV functions, then display the processed frames.
 
-#### PROCESSING:
-### IMPORTING THE LIBRARIES:
-## CODE:
-~~~
+---
+
+## 💻 Program
+
+### Developed By:
+**Name:** ____________________________  
+
+### Register No:
+____________________________  
+
+---
+##PROGRAM:
+```
 import cv2
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
-~~~
-### i) Write the Frame as a JPG Image
-## CODE:
-~~~
+```
+
+### i) Write the frame as JPG image
+Captured image is saved as `MY.jpg`
+```
 cap = cv2.VideoCapture(0)
 ret, frame = cap.read()
 if ret:
-    cv2.imwrite("rosh pic.jpg", frame)
+    cv2.imwrite(r"C:\Users\naren\OneDrive\Pictures\Camera Roll\MY.jpg", frame)
 cap.release()
-captured_image = cv2.imread('rosh pic.jpg')
-~~~
+captured_image = cv2.imread(r"C:\Users\naren\OneDrive\Pictures\Camera Roll\MY.jpg")
+import matplotlib.pyplot as plt
 
-### ii) Display the Video
-
-## CODE:
-~~~
-plt.imshow(captured_image[:,:,::-1])
+plt.imshow(captured_image[:, :, ::-1])
 plt.title('Captured Frame')
 plt.axis('off')
 plt.show()
-~~~
-## OUTPUT:
-![alt text](image.png)
-### iii) Display the Video by Resizing the Window
+```
+##OUTPUT:
+<img width="717" height="407" alt="image" src="https://github.com/user-attachments/assets/54665c53-9cb3-4899-8974-b5c5e3cd18ff" />
 
-## CODE:
-~~~
+
+### ii) Display the video
+Live webcam video is displayed
+```
+import cv2
+import matplotlib.pyplot as plt
+import time
+from IPython.display import clear_output
+
+cap = cv2.VideoCapture(0)
+
+for i in range(50):
+    ret, frame = cap.read()
+    if not ret:
+        print("Failed to capture frame")
+        break
+
+    resized_frame = cv2.resize(frame, (100, 150))
+    frame_rgb = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
+
+    clear_output(wait=True)
+    plt.imshow(frame_rgb)
+    plt.title('Live Webcam Frame')
+    plt.axis('off')
+    plt.show()
+
+    time.sleep(0.05)
+
+cap.release()
+```
+
+##OUTPUT:
+<img width="377" height="400" alt="image" src="https://github.com/user-attachments/assets/f5375d56-c135-46a7-83ea-90cedb838d7d" />
+
+
+### iii) Display the video by resizing the window
+Video is shown in resized resolution (640 × 480)
+```
 cap = cv2.VideoCapture(0)
 
 for i in range(50):
@@ -87,59 +129,41 @@ for i in range(50):
 
 cap.release()
 
-~~~
-## OUTPUT:
-![alt text](image-1.png)
-## COMPRESSING :
-## CODE:
-~~~
-ap = cv2.VideoCapture(0)
+```
+##OUTPUT:
+
+<img width="630" height="410" alt="image" src="https://github.com/user-attachments/assets/ea682ea0-eb57-4f1b-b93b-810ac7cf818b" />
+
+
+
+### iv) Rotate and display the video
+Video is displayed after rotation (90° clockwise)
+```
+cap = cv2.VideoCapture(0)
 
 for i in range(50):
     ret, frame = cap.read()
     if not ret:
         break
-    resized_frame = cv2.resize(frame, (100, 150))  # Resize to 320x240
-    frame_rgb = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
+
+    rotated_frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+    frame_rgb = cv2.cvtColor(rotated_frame, cv2.COLOR_BGR2RGB)
+
     clear_output(wait=True)
     plt.imshow(frame_rgb)
     plt.axis('off')
     plt.show()
+
     time.sleep(0.05)
 
 cap.release()
-~~~
-## OUTPUT:
-![alt text](image-2.png)
-### v)  Display the Video
+```
+##OUTPUT:
 
-## CODE:
-~~~
-for i in range(50):
-    ret, frame = cap.read()
-    if not ret:
-        break
-    rotated_frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-    frame_rgb = cv2.cvtColor(rotated_frame, cv2.COLOR_BGR2RGB)
-    clear_output(wait=True)
-    plt.imshow(frame_rgb)
-    plt.axis('off')
-    plt.show()
-    time.sleep(0.05)
+<img width="325" height="440" alt="image" src="https://github.com/user-attachments/assets/ad54d7bb-9f8c-4ac7-b379-1d13f9be92fd" />
 
-~~~
-## OUTPUT:
-![alt text](image-3.png)
-## How to Run the Program
 
-1. Install Python and OpenCV in your environment.
-2. Open the project folder in Visual Studio Code.
-3. Run the Python program using the VS Code terminal.
-4. Allow webcam access if prompted.
-5. Verify the saved image and observe the video processing windows.
 
 ## Result
 
-Thus, an image was successfully captured from the webcam and saved as a JPG file. The live video was displayed, resized to 640 × 480 pixels, and rotated by 90° clockwise using Python and OpenCV.
-
-
+Thus, the image is successfully captured from the webcam and various video processing operations such as saving, displaying, resizing, and rotating are performed using OpenCV.
